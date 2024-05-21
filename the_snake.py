@@ -43,12 +43,12 @@ clock = pygame.time.Clock()
 # Тут опишите все классы игры.
 class GameObject:
     """Базовый класс для игровых объектов."""
-    
+
     def __init__(self):
         """Инициализация игрового объекта."""
         self.position = (0, 0)
         self.body_color = DEFAULT_COLOR
-        
+
     def draw(self):
         """Отрисовка игрового объекта."""
         pass
@@ -56,7 +56,7 @@ class GameObject:
 
 class Apple(GameObject):
     """Класс для представления яблока."""
-    
+
     def __init__(self):
         """Инициализация яблока."""
         self.body_color = APPLE_COLOR
@@ -79,7 +79,7 @@ class Apple(GameObject):
 
 class Snake(GameObject):
     """Класс для представления змейки."""
-    
+
     def __init__(self):
         """Инициализация змейки."""
         super().__init__()
@@ -144,8 +144,8 @@ class Snake(GameObject):
         self.length = 1
         self.positions = [(SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2)]
         self.direction = choice([UP, DOWN, LEFT, RIGHT])
-        
-        
+
+
 def handle_keys(game_object):
     """Обработка нажатий клавиш."""
     for event in pygame.event.get():
@@ -169,25 +169,23 @@ def main():
     pygame.init()
     # Тут нужно создать экземпляры классов.
     apple = Apple()
-    
+
     snake = Snake()
     apple.draw()
-    
+
     while True:
         clock.tick(SPEED)
         handle_keys(snake)
         snake.update_direction()
         snake.move()
-        
         screen.fill(BOARD_BACKGROUND_COLOR)
         if apple.position == snake.get_head_position():
             snake.eat()
             apple.randomize_position()
         apple.draw()
         snake.draw()
-        
         pygame.display.update()
-        
-        
+
+
 if __name__ == '__main__':
     main()
