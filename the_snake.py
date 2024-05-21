@@ -129,10 +129,9 @@ class Snake(GameObject):
             new_head_y = (new_head_y + GRID_SIZE) % SCREEN_HEIGHT
 
         self.positions.insert(0, (new_head_x, new_head_y))
+        self.last = self.positions.pop()
         if (new_head_x, new_head_y) in self.positions[1:]:
             self.reset()
-        else:
-            self.last = self.positions.pop()
 
     def eat(self):
         """Обработка съедения яблока змейкой."""
@@ -142,7 +141,7 @@ class Snake(GameObject):
     def reset(self):
         """Сброс состояния змейки."""
         self.length = 1
-        self.positions = [(SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2)]
+        self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
         self.direction = choice([UP, DOWN, LEFT, RIGHT])
 
 
