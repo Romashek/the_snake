@@ -1,5 +1,4 @@
 from random import choice, randint
-
 import pygame
 
 # Константы для размеров поля и сетки:
@@ -26,7 +25,7 @@ APPLE_COLOR = (255, 0, 0)
 # Цвет змейки
 SNAKE_COLOR = (0, 255, 0)
 
-DEFAULT_COLOR = (100,100,100)
+DEFAULT_COLOR = (100, 100, 100)
 
 # Скорость движения змейки:
 SPEED = 5
@@ -43,12 +42,13 @@ clock = pygame.time.Clock()
 
 # Тут опишите все классы игры.
 class GameObject:
+    
     def __init__(self):
-        self.position = (0,0)
+        self.position = (0, 0)
         self.body_color = DEFAULT_COLOR
+        
     def draw(self):
         pass
-    
     
 class Apple(GameObject):
     
@@ -67,8 +67,6 @@ class Apple(GameObject):
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
-
- 
 
 class Snake(GameObject):
     
@@ -104,7 +102,7 @@ class Snake(GameObject):
             self.next_direction = None
             
     def move(self):
-        new_head_x,new_head_y = self.get_head_position()
+        new_head_x, new_head_y = self.get_head_position()
             
         if self.direction == RIGHT:
             new_head_x = (new_head_x + GRID_SIZE) % SCREEN_WIDTH
@@ -116,12 +114,11 @@ class Snake(GameObject):
             new_head_y = (new_head_y + GRID_SIZE) % SCREEN_HEIGHT
     
         self.positions.insert(0, (new_head_x, new_head_y))
-        if (new_head_x,new_head_y) in self.positions[1:]:
+        if (new_head_x, new_head_y) in self.positions[1:]:
             self.reset()
             
         else:
             self.last = self.positions.pop()
-        
         
     def eat(self):
         self.length += 1
@@ -171,7 +168,6 @@ def main():
         
         pygame.display.update()
         
-
-
+        
 if __name__ == '__main__':
     main()
