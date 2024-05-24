@@ -1,4 +1,5 @@
-from random import choice, randint
+from random import choice, randrange
+
 import pygame
 
 # Константы для размеров поля и сетки:
@@ -13,16 +14,13 @@ DOWN = (0, 1)
 LEFT = (-1, 0)
 RIGHT = (1, 0)
 
-# Цвет фона - черный:
+
 BOARD_BACKGROUND_COLOR = (0, 0, 0)
 
-# Цвет границы ячейки
 BORDER_COLOR = (93, 216, 228)
 
-# Цвет яблока
 APPLE_COLOR = (255, 0, 0)
 
-# Цвет змейки
 SNAKE_COLOR = (0, 255, 0)
 
 DEFAULT_COLOR = (100, 100, 100)
@@ -40,7 +38,6 @@ pygame.display.set_caption('Змейка')
 clock = pygame.time.Clock()
 
 
-# Тут опишите все классы игры.
 class GameObject:
     """Базовый класс для игровых объектов."""
 
@@ -65,8 +62,8 @@ class Apple(GameObject):
     def randomize_position(self):
         """Генерация случайной позиции для яблока."""
         self.position = (
-            randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-            randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+            randrange(0, GRID_WIDTH - 1, GRID_SIZE),
+            randrange(0, GRID_HEIGHT - 1, GRID_SIZE)
         )
         return self.position
 
@@ -143,6 +140,7 @@ class Snake(GameObject):
         self.length = 1
         self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
         self.direction = choice([UP, DOWN, LEFT, RIGHT])
+        screen.fill(BOARD_BACKGROUND_COLOR)
 
 
 def handle_keys(game_object):
@@ -166,9 +164,7 @@ def main():
     """Основная функция игры."""
     # Инициализация PyGame:
     pygame.init()
-    # Тут нужно создать экземпляры классов.
     apple = Apple()
-
     snake = Snake()
     apple.draw()
 
@@ -177,7 +173,7 @@ def main():
         handle_keys(snake)
         snake.update_direction()
         snake.move()
-        screen.fill(BOARD_BACKGROUND_COLOR)
+
         if apple.position == snake.get_head_position():
             snake.eat()
             apple.randomize_position()
